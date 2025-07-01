@@ -39,7 +39,7 @@ A well-written README can:
 
 ##  Project Structure
 
-
+````
 github-readme-enhancer/
 │
 ├── agents/               # Multi-agent logic

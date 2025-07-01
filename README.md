@@ -1,4 +1,4 @@
-```
+
 #  GitHub README Enhancement Tool
 
 **AI-Powered Multi-Agent System Built with Streamlit**
@@ -36,11 +36,9 @@ A well-written README can:
 | Configuration          | `.env` / `st.secrets`   |
 | Dependency Management  | `requirements.txt`      |
 
----
 
 ##  Project Structure
 
-```
 
 github-readme-enhancer/
 │

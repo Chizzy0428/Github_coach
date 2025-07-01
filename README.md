@@ -154,7 +154,4 @@ Built using:
 * [Streamlit](https://streamlit.io/)
 * [OpenAI](https://openai.com/)
 
-```
 
-
-```

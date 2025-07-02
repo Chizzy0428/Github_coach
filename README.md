@@ -94,9 +94,9 @@ github-readme-enhancer/
 
 4. **Run the Streamlit App**
 
-   ```bash
-   streamlit run main.py
    ```
+   streamlit run main.py
+
 
 ##  How to Use
 

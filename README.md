@@ -23,9 +23,8 @@ A high-quality README can:
 - Increase your project's visibility and adoption.
 - Enhance the perceived professionalism of your work.
 
----
-
-## 🧰 Tech Stack
+````
+## Tech Stack
 
 | Component              | Technology               |
 |------------------------|--------------------------|
@@ -34,12 +33,11 @@ A high-quality README can:
 | Multi-Agent System     | LangGraph (Python)       |
 | Configuration          | `.env` or Streamlit Secrets |
 | Dependency Management  | `requirements.txt`       |
+````
 
----
+## Project Structure
 
-## 🗂️ Project Structure
-
-```
+````
 
 github-readme-enhancer/
 │
@@ -54,7 +52,7 @@ github-readme-enhancer/
 
 ````
 
----
+
 
 ## ⚙️ Installation & Setup
 
@@ -67,10 +65,10 @@ github-readme-enhancer/
 ### 🔧 Setup Instructions
 
 1. **Clone the Repository**
-   ```bash
+   ```
    git clone https://github.com/your-username/github-readme-enhancer.git
    cd github-readme-enhancer
-````
+   ````
 
 2. **Install Dependencies**
 
@@ -96,13 +94,13 @@ github-readme-enhancer/
 
 4. **Run the App**
 
-   ```bash
+
    streamlit run main.py
-   ```
 
----
 
-## 🧪 How to Use
+
+
+## How to Use
 
 1. Launch the app in your browser.
 2. Paste the GitHub repository URL.
@@ -114,45 +112,38 @@ github-readme-enhancer/
    * Review and validate content suggestions
 4. Review, copy, and paste changes into your own README!
 
----
 
-## ⚠️ Limitations
+
+## Limitations
 
 * Best results with projects that already have a README.
 * Currently optimized for **public GitHub repositories**.
 * Designed for Python-based AI/ML projects but can be adapted.
 
----
 
-## 🤝 Contributing
+
+## Contributing
 
 Contributions are welcome!
 
 1. Fork the repository.
 2. Create a new branch:
 
-   ```bash
+   ```
    git checkout -b feature-name
    ```
 3. Make your changes.
 4. Submit a pull request for review.
 
----
 
-## 📄 License
+
+## License
 
 This project is licensed under the [MIT License](LICENSE). You're free to use, modify, and distribute it with proper attribution.
 
----
 
-## 🔖 Tags
 
-`#GitHub` `#README` `#Streamlit` `#MultiAgentSystem` `#AI` `#LLM` `#LangChain` `#OpenAI`
-`#DeveloperTools` `#Automation` `#UXEnhancement` `#Python`
-
----
-
-## 🙏 Acknowledgements
+##  Acknowledgements
 
 This project was built with:
 

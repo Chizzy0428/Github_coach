@@ -8,8 +8,9 @@ from agents.reviewer import reviewer_critic
 from agents.fact_checker import fact_checker
 from typing import TypedDict, Optional
 
+# Import the logging function
+from evaluation.ragas_eval import log_interaction
 
-# ---------- Define State Structure ----------
 class State(TypedDict, total=False):
     repo_url: str
     description: Optional[str]
@@ -21,19 +22,14 @@ class State(TypedDict, total=False):
     verified_suggestions: str
     runtime: float
 
-
-# ---------- Multi-Agent Workflow ----------
 def create_graph():
     workflow = StateGraph(State)
+    workflow.add_node("Repo Analyzer", repo_analyzer)
+    workflow.add_node("Content Improver", content_improver)
+    workflow.add_node("Metadata Recommender", metadata_recommender)
+    workflow.add_node("Reviewer", reviewer_critic)
+    workflow.add_node("Fact Checker", fact_checker)
 
-    # Specialized AI Agents
-    workflow.add_node("Repo Analyzer", repo_analyzer)              # Extracts README and repo structure
-    workflow.add_node("Content Improver", content_improver)        # Refines title & intro
-    workflow.add_node("Metadata Recommender", metadata_recommender) # Generates tags
-    workflow.add_node("Reviewer", reviewer_critic)                 # Audits tone, clarity, structure
-    workflow.add_node("Fact Checker", fact_checker)                # Validates reviewer outputs
-
-    # Workflow logic
     workflow.set_entry_point("Repo Analyzer")
     workflow.add_edge("Repo Analyzer", "Content Improver")
     workflow.add_edge("Repo Analyzer", "Metadata Recommender")
@@ -43,8 +39,6 @@ def create_graph():
 
     return workflow.compile()
 
-
-# ---------- Streamlit UI ----------
 st.set_page_config(page_title="GitHub README Improver", layout="wide")
 st.title("🤖 GitHub Publication Assistant")
 st.markdown("A multi-agent system that analyzes and enhances your GitHub AI/ML project presentation using LLM-powered assistants.")
@@ -60,29 +54,38 @@ if st.button("🔍 Analyze and Improve") and repo_url:
     end_time = time.time()
     result["runtime"] = round(end_time - start_time, 2)
 
-    # ---------- Safe Extraction ----------
     def extract_text(obj):
         return obj.content if hasattr(obj, "content") else str(obj)
 
+    verified_suggestions = extract_text(result.get("verified_suggestions", "No suggestions generated."))
+    tags_raw = extract_text(result.get("tags", "No tags suggested."))
+    improved_content = extract_text(result.get("improved_content", "No improvement suggestions."))
+    review_feedback = extract_text(result.get("review_feedback", "No review feedback."))
+
     # ---------- Display Results ----------
     st.subheader("✅ Verified Suggestions")
-    st.markdown(extract_text(result.get("verified_suggestions", "No suggestions generated.")))
+    st.markdown(verified_suggestions)
 
     st.subheader("🏷️ Metadata Tags")
-    tags_raw = extract_text(result.get("tags", "No tags suggested."))
     tags = [t.strip("# ") for t in tags_raw.split() if t.startswith("#")]
     st.markdown(", ".join(tags) if tags else tags_raw)
 
     st.subheader("✍ Improved Title & Intro")
-    st.markdown(extract_text(result.get("improved_content", "No improvement suggestions.")))
+    st.markdown(improved_content)
 
     st.subheader("🔍 Review Feedback")
-    st.markdown(extract_text(result.get("review_feedback", "No review feedback.")))
+    st.markdown(review_feedback)
 
     st.info(f"🕒 Processing Time: {result['runtime']} seconds")
 
+    # 🟡 NEW: Log the interaction for RAGAS
+    log_interaction(
+        query="Summarize this repository",
+        context=result.get("readme", ""),
+        generated_answer=improved_content,
+        ground_truth=None
+    )
 
-# ---------- Expandable Info ----------
 with st.expander("📘 Project Architecture & Agent Roles"):
     st.markdown("""
     **🧠 Agents:**
@@ -109,4 +112,3 @@ with st.expander("📘 Project Architecture & Agent Roles"):
     OPENAI_API_KEY=your-key-here
     ```
     """)
-
